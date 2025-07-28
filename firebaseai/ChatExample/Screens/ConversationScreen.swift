@@ -23,10 +23,10 @@ struct ConversationScreen: View {
   @State
   private var userPrompt = ""
 
-  init(firebaseService: FirebaseAI) {
+  init(firebaseService: FirebaseAI, sampleId: UUID? = nil) {
     self.firebaseService = firebaseService
     _viewModel =
-      StateObject(wrappedValue: ConversationViewModel(firebaseService: firebaseService))
+      StateObject(wrappedValue: ConversationViewModel(firebaseService: firebaseService, sampleId: sampleId))
   }
 
   enum FocusedField: Hashable {
@@ -91,6 +91,10 @@ struct ConversationScreen: View {
     .navigationTitle("Chat example")
     .onAppear {
       focusedField = .message
+      // Set initial prompt from viewModel if available
+      if userPrompt.isEmpty && !viewModel.initialPrompt.isEmpty {
+        userPrompt = viewModel.initialPrompt
+      }
     }
   }
 
@@ -114,6 +118,7 @@ struct ConversationScreen: View {
 
   private func newChat() {
     viewModel.startNewChat()
+    userPrompt = ""
   }
 }
 

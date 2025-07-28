@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,26 +13,33 @@
 // limitations under the License.
 
 import Foundation
+import FirebaseAI
 
-enum Participant {
-  case system
+public enum Participant {
+  case model
   case user
 }
 
-struct ChatMessage: Identifiable, Equatable {
-  let id = UUID().uuidString
-  var message: String
-  let participant: Participant
-  var pending = false
+public struct ChatMessage: Identifiable, Equatable {
+  public let id = UUID().uuidString
+  public var message: String
+  public let participant: Participant
+  public var pending = false
 
-  static func pending(participant: Participant) -> ChatMessage {
+  public init(message: String, participant: Participant, pending: Bool = false) {
+    self.message = message
+    self.participant = participant
+    self.pending = pending
+  }
+
+  public static func pending(participant: Participant) -> ChatMessage {
     Self(message: "", participant: participant, pending: true)
   }
 }
 
 extension ChatMessage {
-  static var samples: [ChatMessage] = [
-    .init(message: "Hello. What can I do for you today?", participant: .system),
+  public static var samples: [ChatMessage] = [
+    .init(message: "Hello. What can I do for you today?", participant: .model),
     .init(message: "Show me a simple loop in Swift.", participant: .user),
     .init(message: """
     Sure, here is a simple loop in Swift:
@@ -57,8 +64,36 @@ extension ChatMessage {
     ```
 
     This loop calculates the sum of the numbers from 1 to 100. The variable sum is initialized to 0, and then the for loop iterates over the range of numbers from 1 to 100. The variable i is assigned each number in the range, and the value of i is added to the sum variable. After the loop has finished executing, the value of sum is printed to the console.
-    """, participant: .system),
+    """, participant: .model),
   ]
 
-  static var sample = samples[0]
+  public static var sample = samples[0]
+}
+
+// MARK: - ModelContent Conversion
+extension ChatMessage {
+  /// Convert ModelContent to ChatMessage
+  public static func from(_ modelContent: ModelContent) -> ChatMessage? {
+    // Extract text from parts - parts is Array<Part>
+    guard let textPart = modelContent.parts.first as? TextPart else {
+      return nil
+    }
+    
+    let participant: Participant
+    switch modelContent.role {
+    case "user":
+      participant = .user
+    case "model":
+      participant = .model
+    default:
+      return nil
+    }
+    
+    return ChatMessage(message: textPart.text, participant: participant)
+  }
+  
+  /// Convert array of ModelContent to array of ChatMessage
+  public static func from(_ modelContents: [ModelContent]) -> [ChatMessage] {
+    return modelContents.compactMap { from($0) }
+  }
 }

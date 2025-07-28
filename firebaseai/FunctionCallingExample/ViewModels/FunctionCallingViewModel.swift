@@ -15,10 +15,11 @@
 import FirebaseAI
 import Foundation
 import UIKit
+import GenerativeAIUIComponents
 
 @MainActor
 class FunctionCallingViewModel: ObservableObject {
-  /// This array holds both the user's and the system's chat messages
+  /// This array holds both the user's and the model's chat messages
   @Published var messages = [ChatMessage]()
 
   /// Indicates we're waiting for the model to finish
@@ -75,8 +76,8 @@ class FunctionCallingViewModel: ObservableObject {
       messages.append(userMessage)
 
       // add a pending message while we're waiting for a response from the backend
-      let systemMessage = ChatMessage.pending(participant: .system)
-      messages.append(systemMessage)
+      let modelMessage = ChatMessage.pending(participant: .model)
+      messages.append(modelMessage)
 
       print(messages)
       do {
@@ -224,7 +225,7 @@ private extension FunctionCallPart {
     }
     let messageText = "Function call requested by model:\n```\n\(json)\n```"
 
-    return ChatMessage(message: messageText, participant: .system)
+    return ChatMessage(message: messageText, participant: .model)
   }
 }
 

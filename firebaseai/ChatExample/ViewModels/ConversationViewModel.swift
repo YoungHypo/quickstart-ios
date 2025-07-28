@@ -15,10 +15,11 @@
 import FirebaseAI
 import Foundation
 import UIKit
+import GenerativeAIUIComponents
 
 @MainActor
 class ConversationViewModel: ObservableObject {
-  /// This array holds both the user's and the system's chat messages
+  /// This array holds both the user's and the model's chat messages
   @Published var messages = [ChatMessage]()
 
   /// Indicates we're waiting for the model to finish
@@ -29,15 +30,32 @@ class ConversationViewModel: ObservableObject {
     return error != nil
   }
 
+  @Published var initialPrompt: String = ""
+  @Published var title: String = ""
+
   private var model: GenerativeModel
   private var chat: Chat
   private var stopGenerating = false
 
   private var chatTask: Task<Void, Never>?
 
-  init(firebaseService: FirebaseAI) {
+  init(firebaseService: FirebaseAI, sampleId: UUID? = nil) {
     model = firebaseService.generativeModel(modelName: "gemini-2.0-flash-001")
-    chat = model.startChat()
+    
+    // Initialize with sample data if available and valid
+    if let sampleId = sampleId, let sample = Sample.find(by: sampleId) {
+      if !sample.messages.isEmpty {
+        // Initialize with chat history
+        messages = ChatMessage.from(sample.messages)
+        chat = model.startChat(history: sample.messages)
+      } else {
+        chat = model.startChat()
+      }
+      initialPrompt = sample.initialPrompt
+      title = sample.title
+    } else {
+      chat = model.startChat()
+    }
   }
 
   func sendMessage(_ text: String, streaming: Bool = true) async {
@@ -54,6 +72,8 @@ class ConversationViewModel: ObservableObject {
     error = nil
     chat = model.startChat()
     messages.removeAll()
+    initialPrompt = ""
+    title = ""
   }
 
   func stop() {
@@ -75,8 +95,8 @@ class ConversationViewModel: ObservableObject {
       messages.append(userMessage)
 
       // add a pending message while we're waiting for a response from the backend
-      let systemMessage = ChatMessage.pending(participant: .system)
-      messages.append(systemMessage)
+      let modelMessage = ChatMessage.pending(participant: .model)
+      messages.append(modelMessage)
 
       do {
         let responseStream = try chat.sendMessageStream(text)
@@ -108,8 +128,8 @@ class ConversationViewModel: ObservableObject {
       messages.append(userMessage)
 
       // add a pending message while we're waiting for a response from the backend
-      let systemMessage = ChatMessage.pending(participant: .system)
-      messages.append(systemMessage)
+      let modelMessage = ChatMessage.pending(participant: .model)
+      messages.append(modelMessage)
 
       do {
         var response: GenerateContentResponse?

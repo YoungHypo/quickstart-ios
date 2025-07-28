@@ -14,6 +14,7 @@
 
 import SwiftUI
 import FirebaseAI
+import GenerativeAIUIComponents
 
 enum BackendOption: String, CaseIterable, Identifiable {
   case googleAI = "Gemini Developer API"
@@ -106,7 +107,7 @@ struct ContentView: View {
   private func destinationView(for sample: Sample) -> some View {
     switch sample.useCase {
     case .text:
-      ConversationScreen(firebaseService: firebaseService)
+      ConversationScreen(firebaseService: firebaseService, sampleId: sample.id)
     case .image:
       ImagenScreen(firebaseService: firebaseService)
     case .video, .audio, .document:

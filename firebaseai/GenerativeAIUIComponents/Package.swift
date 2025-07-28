@@ -27,9 +27,15 @@ let package = Package(
       targets: ["GenerativeAIUIComponents"]
     ),
   ],
+  dependencies: [
+    .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "11.13.0"),
+  ],
   targets: [
     .target(
-      name: "GenerativeAIUIComponents"
+      name: "GenerativeAIUIComponents",
+      dependencies: [
+        .product(name: "FirebaseAI", package: "firebase-ios-sdk"),
+      ]
     ),
   ]
 )

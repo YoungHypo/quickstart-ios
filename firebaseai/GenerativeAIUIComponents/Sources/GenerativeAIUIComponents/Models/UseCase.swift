@@ -14,7 +14,7 @@
 
 import Foundation
 
-enum UseCase: String, CaseIterable, Identifiable {
+public enum UseCase: String, CaseIterable, Identifiable {
   case text = "Text"
   case image = "Image"
   case video = "Video"
@@ -22,5 +22,5 @@ enum UseCase: String, CaseIterable, Identifiable {
   case document = "Document"
   case functionCalling = "Function Calling"
 
-  var id: String { rawValue }
-}
+  public var id: String { rawValue }
+} 
