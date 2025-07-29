@@ -26,7 +26,8 @@ struct ConversationScreen: View {
   init(firebaseService: FirebaseAI, sampleId: UUID? = nil) {
     self.firebaseService = firebaseService
     _viewModel =
-      StateObject(wrappedValue: ConversationViewModel(firebaseService: firebaseService, sampleId: sampleId))
+      StateObject(wrappedValue: ConversationViewModel(firebaseService: firebaseService,
+                                                      sampleId: sampleId))
   }
 
   enum FocusedField: Hashable {

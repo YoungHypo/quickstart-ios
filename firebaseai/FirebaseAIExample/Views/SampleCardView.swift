@@ -21,9 +21,9 @@ struct SampleCardView: View {
   var body: some View {
     VStack(alignment: .leading) {
       Text(sample.title)
-            .font(.system(size: 17, weight: .medium))
+        .font(.system(size: 17, weight: .medium))
       Text(sample.description)
-            .font(.system(size: 14))
+        .font(.system(size: 14))
         .foregroundColor(.secondary)
         .padding(.top, 4)
     }

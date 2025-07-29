@@ -23,4 +23,4 @@ public enum UseCase: String, CaseIterable, Identifiable {
   case functionCalling = "Function Calling"
 
   public var id: String { rawValue }
-} 
+}

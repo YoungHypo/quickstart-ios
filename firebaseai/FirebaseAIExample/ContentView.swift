@@ -41,7 +41,7 @@ struct ContentView: View {
   }
 
   let columns = [
-    GridItem(.adaptive(minimum: 150))
+    GridItem(.adaptive(minimum: 150)),
   ]
 
   var body: some View {
@@ -62,7 +62,7 @@ struct ContentView: View {
           // Use Case Filter
           VStack(alignment: .leading) {
             Text("Filter by use case")
-                  .font(.system(size: 20, weight: .bold))
+              .font(.system(size: 20, weight: .bold))
               .padding(.horizontal)
 
             ScrollView(.horizontal, showsIndicators: false) {

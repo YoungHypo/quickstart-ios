@@ -71,6 +71,7 @@ extension ChatMessage {
 }
 
 // MARK: - ModelContent Conversion
+
 extension ChatMessage {
   /// Convert ModelContent to ChatMessage
   public static func from(_ modelContent: ModelContent) -> ChatMessage? {
@@ -78,7 +79,7 @@ extension ChatMessage {
     guard let textPart = modelContent.parts.first as? TextPart else {
       return nil
     }
-    
+
     let participant: Participant
     switch modelContent.role {
     case "user":
@@ -88,10 +89,10 @@ extension ChatMessage {
     default:
       return nil
     }
-    
+
     return ChatMessage(message: textPart.text, participant: participant)
   }
-  
+
   /// Convert array of ModelContent to array of ChatMessage
   public static func from(_ modelContents: [ModelContent]) -> [ChatMessage] {
     return modelContents.compactMap { from($0) }
