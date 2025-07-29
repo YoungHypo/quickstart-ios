@@ -31,7 +31,6 @@ class ConversationViewModel: ObservableObject {
   }
 
   @Published var initialPrompt: String = ""
-  @Published var title: String = ""
 
   private var model: GenerativeModel
   private var chat: Chat
@@ -39,23 +38,24 @@ class ConversationViewModel: ObservableObject {
 
   private var chatTask: Task<Void, Never>?
 
+  private var sample: Sample?
+
   init(firebaseService: FirebaseAI, sampleId: UUID? = nil) {
-    model = firebaseService.generativeModel(modelName: "gemini-2.0-flash-001")
-    
-    // Initialize with sample data if available and valid
-    if let sampleId = sampleId, let sample = Sample.find(by: sampleId) {
-      if !sample.messages.isEmpty {
-        // Initialize with chat history
-        messages = ChatMessage.from(sample.messages)
-        chat = model.startChat(history: sample.messages)
-      } else {
-        chat = model.startChat()
-      }
-      initialPrompt = sample.initialPrompt
-      title = sample.title
+    sample = Sample.find(by: sampleId)
+
+    model = firebaseService.generativeModel(
+      modelName: "gemini-2.0-flash-001",
+      systemInstruction: sample?.systemInstruction
+    )
+
+    if let chatHistory = sample?.chatHistory, !chatHistory.isEmpty {
+      // Initialize with sample chat history if it's available and non-empty
+      messages = ChatMessage.from(chatHistory)
+      chat = model.startChat(history: chatHistory)
     } else {
       chat = model.startChat()
     }
+    initialPrompt = sample?.initialPrompt ?? ""
   }
 
   func sendMessage(_ text: String, streaming: Bool = true) async {
@@ -73,7 +73,6 @@ class ConversationViewModel: ObservableObject {
     chat = model.startChat()
     messages.removeAll()
     initialPrompt = ""
-    title = ""
   }
 
   func stop() {
