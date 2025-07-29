@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ import Foundation
 import FirebaseAI
 
 public enum Participant {
-  case model
+  case system
   case user
 }
 
@@ -39,7 +39,7 @@ public struct ChatMessage: Identifiable, Equatable {
 
 extension ChatMessage {
   public static var samples: [ChatMessage] = [
-    .init(message: "Hello. What can I do for you today?", participant: .model),
+    .init(message: "Hello. What can I do for you today?", participant: .system),
     .init(message: "Show me a simple loop in Swift.", participant: .user),
     .init(message: """
     Sure, here is a simple loop in Swift:
@@ -64,7 +64,7 @@ extension ChatMessage {
     ```
 
     This loop calculates the sum of the numbers from 1 to 100. The variable sum is initialized to 0, and then the for loop iterates over the range of numbers from 1 to 100. The variable i is assigned each number in the range, and the value of i is added to the sum variable. After the loop has finished executing, the value of sum is printed to the console.
-    """, participant: .model),
+    """, participant: .system),
   ]
 
   public static var sample = samples[0]
@@ -85,7 +85,7 @@ extension ChatMessage {
     case "user":
       participant = .user
     case "model":
-      participant = .model
+      participant = .system
     default:
       return nil
     }
