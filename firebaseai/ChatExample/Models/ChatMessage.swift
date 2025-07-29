@@ -15,30 +15,30 @@
 import Foundation
 import FirebaseAI
 
-public enum Participant {
+enum Participant {
   case system
   case user
 }
 
-public struct ChatMessage: Identifiable, Equatable {
-  public let id = UUID().uuidString
-  public var message: String
-  public let participant: Participant
-  public var pending = false
+struct ChatMessage: Identifiable, Equatable {
+  let id = UUID().uuidString
+  var message: String
+  let participant: Participant
+  var pending = false
 
-  public init(message: String, participant: Participant, pending: Bool = false) {
+  init(message: String, participant: Participant, pending: Bool = false) {
     self.message = message
     self.participant = participant
     self.pending = pending
   }
 
-  public static func pending(participant: Participant) -> ChatMessage {
+  static func pending(participant: Participant) -> ChatMessage {
     Self(message: "", participant: participant, pending: true)
   }
 }
 
 extension ChatMessage {
-  public static var samples: [ChatMessage] = [
+  static var samples: [ChatMessage] = [
     .init(message: "Hello. What can I do for you today?", participant: .system),
     .init(message: "Show me a simple loop in Swift.", participant: .user),
     .init(message: """
@@ -67,14 +67,12 @@ extension ChatMessage {
     """, participant: .system),
   ]
 
-  public static var sample = samples[0]
+  static var sample = samples[0]
 }
 
-// MARK: - ModelContent Conversion
-
 extension ChatMessage {
-  /// Convert ModelContent to ChatMessage
-  public static func from(_ modelContent: ModelContent) -> ChatMessage? {
+  // Convert ModelContent to ChatMessage
+  static func from(_ modelContent: ModelContent) -> ChatMessage? {
     // Extract text from parts - parts is Array<Part>
     guard let textPart = modelContent.parts.first as? TextPart else {
       return nil
@@ -93,8 +91,8 @@ extension ChatMessage {
     return ChatMessage(message: textPart.text, participant: participant)
   }
 
-  /// Convert array of ModelContent to array of ChatMessage
-  public static func from(_ modelContents: [ModelContent]) -> [ChatMessage] {
+  // Convert array of ModelContent to array of ChatMessage
+  static func from(_ modelContents: [ModelContent]) -> [ChatMessage] {
     return modelContents.compactMap { from($0) }
   }
 }
