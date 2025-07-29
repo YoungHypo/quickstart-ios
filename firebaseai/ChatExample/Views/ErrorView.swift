@@ -14,7 +14,6 @@
 
 import FirebaseAI
 import SwiftUI
-import GenerativeAIUIComponents
 
 struct ErrorView: View {
   var error: Error

@@ -14,7 +14,6 @@
 
 import MarkdownUI
 import SwiftUI
-import GenerativeAIUIComponents
 
 struct RoundedCorner: Shape {
   var radius: CGFloat = .infinity

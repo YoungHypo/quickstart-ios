@@ -19,7 +19,7 @@ import GenerativeAIUIComponents
 
 @MainActor
 class FunctionCallingViewModel: ObservableObject {
-  /// This array holds both the user's and the model's chat messages
+  /// This array holds both the user's and the system's chat messages
   @Published var messages = [ChatMessage]()
 
   /// Indicates we're waiting for the model to finish
