@@ -26,12 +26,6 @@ struct ChatMessage: Identifiable, Equatable {
   let participant: Participant
   var pending = false
 
-  init(message: String, participant: Participant, pending: Bool = false) {
-    self.message = message
-    self.participant = participant
-    self.pending = pending
-  }
-
   static func pending(participant: Participant) -> ChatMessage {
     Self(message: "", participant: participant, pending: true)
   }
