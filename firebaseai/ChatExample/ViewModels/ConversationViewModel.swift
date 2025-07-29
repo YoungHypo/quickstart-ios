@@ -19,7 +19,7 @@ import GenerativeAIUIComponents
 
 @MainActor
 class ConversationViewModel: ObservableObject {
-  /// This array holds both the user's and the model's chat messages
+  /// This array holds both the user's and the system's chat messages
   @Published var messages = [ChatMessage]()
 
   /// Indicates we're waiting for the model to finish
@@ -41,20 +41,23 @@ class ConversationViewModel: ObservableObject {
   private var sample: Sample?
 
   init(firebaseService: FirebaseAI, sampleId: UUID? = nil) {
+    // retrieve sample from sampleId
     sample = Sample.find(by: sampleId)
 
+    // create a generative model with sample data
     model = firebaseService.generativeModel(
       modelName: "gemini-2.0-flash-001",
       systemInstruction: sample?.systemInstruction
     )
 
     if let chatHistory = sample?.chatHistory, !chatHistory.isEmpty {
-      // Initialize with sample chat history if it's available and non-empty
+      // Initialize with sample chat history if it's available
       messages = ChatMessage.from(chatHistory)
       chat = model.startChat(history: chatHistory)
     } else {
       chat = model.startChat()
     }
+
     initialPrompt = sample?.initialPrompt ?? ""
   }
 
