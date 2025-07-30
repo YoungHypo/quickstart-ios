@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		72BBDC452E39C9790015B900 /* GenerativeAIUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 72BBDC442E39C9790015B900 /* GenerativeAIUIComponents */; };
+		7200F3082E3A054300CDC51C /* GenerativeAIUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 7200F3072E3A054300CDC51C /* GenerativeAIUIComponents */; };
 		72DA044F2E385DF3004FED7D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DA044E2E385DF3004FED7D /* ChatMessage.swift */; };
 		869200B32B879C4F00482873 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 869200B22B879C4F00482873 /* GoogleService-Info.plist */; };
 		86C1F4832BC726150026816F /* FunctionCallingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C1F47E2BC726150026816F /* FunctionCallingScreen.swift */; };
@@ -79,7 +79,7 @@
 			files = (
 				DE26D95F2DBB3E9F007E6668 /* FirebaseAI in Frameworks */,
 				886F95D82B17BA420036F07A /* MarkdownUI in Frameworks */,
-				72BBDC452E39C9790015B900 /* GenerativeAIUIComponents in Frameworks */,
+				7200F3082E3A054300CDC51C /* GenerativeAIUIComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +297,8 @@
 				A5E8E3C62C3B4F388A7A4A16 /* SampleCardView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
 		AEE793DE2E256D3900708F02 /* Grounding */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,7 +336,7 @@
 			packageProductDependencies = (
 				886F95D72B17BA420036F07A /* MarkdownUI */,
 				DE26D95E2DBB3E9F007E6668 /* FirebaseAI */,
-				72BBDC442E39C9790015B900 /* GenerativeAIUIComponents */,
+				7200F3072E3A054300CDC51C /* GenerativeAIUIComponents */,
 			);
 			productName = GenerativeAIExample;
 			productReference = 8848C82F2B0D04BC007B434F /* FirebaseAIExample.app */;
@@ -368,7 +370,7 @@
 				88209C212B0FBDF700F64795 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DEA09AC32B1FCE22001962D9 /* XCRemoteSwiftPackageReference "NetworkImage" */,
 				DEFECAAB2D7BB49700EF9621 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				72BBDC432E39C9790015B900 /* XCLocalSwiftPackageReference "GenerativeAIUIComponents" */,
+				7200F3062E3A054300CDC51C /* XCLocalSwiftPackageReference "GenerativeAIUIComponents" */,
 			);
 			productRefGroup = 8848C8302B0D04BC007B434F /* Products */;
 			projectDirPath = "";
@@ -627,7 +629,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		72BBDC432E39C9790015B900 /* XCLocalSwiftPackageReference "GenerativeAIUIComponents" */ = {
+		7200F3062E3A054300CDC51C /* XCLocalSwiftPackageReference "GenerativeAIUIComponents" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = GenerativeAIUIComponents;
 		};
@@ -661,7 +663,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		72BBDC442E39C9790015B900 /* GenerativeAIUIComponents */ = {
+		7200F3072E3A054300CDC51C /* GenerativeAIUIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GenerativeAIUIComponents;
 		};

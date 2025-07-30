@@ -30,13 +30,15 @@ public struct Sample: Identifiable {
               categories: [Category],
               chatHistory: [ModelContent]? = nil,
               initialPrompt: String? = nil,
-              systemInstruction: ModelContent? = nil) {
+              systemInstruction: ModelContent? = nil,
+              tools: [Tool]? = nil) {
     self.title = title
     self.description = description
     self.categories = categories
     self.chatHistory = chatHistory
     self.initialPrompt = initialPrompt
     self.systemInstruction = systemInstruction
+    self.tools = tools
   }
 
   public var category: Category {

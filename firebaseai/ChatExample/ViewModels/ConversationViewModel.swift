@@ -48,8 +48,8 @@ class ConversationViewModel: ObservableObject {
     // create a generative model with sample data
     model = firebaseService.generativeModel(
       modelName: "gemini-2.0-flash-001",
-      systemInstruction: sample?.systemInstruction,
-      tools: sample?.tools
+      tools: sample?.tools,
+      systemInstruction: sample?.systemInstruction
     )
 
     if let chatHistory = sample?.chatHistory, !chatHistory.isEmpty {
