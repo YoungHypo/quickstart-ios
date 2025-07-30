@@ -50,22 +50,20 @@ struct ImagenScreen: View {
           .focused($focusedField, equals: .message)
           .onSubmit { sendOrStop() }
 
-          ScrollView {
-            let spacing: CGFloat = 10
-            LazyVGrid(columns: [
-              GridItem(.flexible(), spacing: spacing),
-              GridItem(.flexible(), spacing: spacing),
-            ], spacing: spacing) {
-              ForEach(viewModel.images, id: \.self) { image in
-                Image(uiImage: image)
-                  .resizable()
-                  .aspectRatio(contentMode: .fill)
-                  .cornerRadius(12)
-                  .clipped()
-              }
+          let spacing: CGFloat = 10
+          LazyVGrid(columns: [
+            GridItem(.flexible(), spacing: spacing),
+            GridItem(.flexible(), spacing: spacing),
+          ], spacing: spacing) {
+            ForEach(viewModel.images, id: \.self) { image in
+              Image(uiImage: image)
+                .resizable()
+                .aspectRatio(1, contentMode: .fill)
+                .cornerRadius(12)
+                .clipped()
             }
-            .padding(.horizontal, spacing)
           }
+          .padding(.horizontal, spacing)
         }
       }
       if viewModel.inProgress {
