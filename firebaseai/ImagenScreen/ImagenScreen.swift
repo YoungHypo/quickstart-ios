@@ -25,7 +25,9 @@ struct ImagenScreen: View {
 
   init(firebaseService: FirebaseAI, sampleId: UUID? = nil) {
     self.firebaseService = firebaseService
-    _viewModel = StateObject(wrappedValue: ImagenViewModel(firebaseService: firebaseService, sampleId: sampleId))
+    _viewModel =
+      StateObject(wrappedValue: ImagenViewModel(firebaseService: firebaseService,
+                                                sampleId: sampleId))
   }
 
   enum FocusedField: Hashable {

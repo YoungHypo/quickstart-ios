@@ -164,14 +164,14 @@ extension Sample {
       initialPrompt: ""
     ),
     Sample(
-      title: "Translation from audio (Vertex AI)",
+      title: "Translation from audio",
       description: "Translate an audio file stored in Cloud Storage",
       useCases: [.audio],
       chatHistory: [
         ModelContent(role: "user", parts: "Can you translate this audio from Spanish to English?"),
         ModelContent(
           role: "model",
-          parts: "I can help you translate audio files using Vertex AI. Please share the audio file you'd like me to translate."
+          parts: "I can help you translate audio files. Please share the audio file you'd like me to translate."
         ),
       ],
       initialPrompt: ""

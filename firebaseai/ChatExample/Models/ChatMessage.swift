@@ -14,7 +14,6 @@
 
 import FirebaseAI
 import Foundation
-import FirebaseAI
 
 enum Participant {
   case system
