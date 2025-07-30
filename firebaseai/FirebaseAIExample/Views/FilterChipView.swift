@@ -16,13 +16,13 @@ import SwiftUI
 import GenerativeAIUIComponents
 
 struct FilterChipView: View {
-  let category: Category
+  let useCase: UseCase
   let isSelected: Bool
   let action: () -> Void
 
   var body: some View {
     Button(action: action) {
-      Text(category.rawValue)
+      Text(useCase.rawValue)
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
         .background(isSelected ? Color.blue.opacity(0.8) : Color.gray.opacity(0.2))

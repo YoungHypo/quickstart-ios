@@ -47,15 +47,18 @@ struct ImagenScreen: View {
         .focused($focusedField, equals: .message)
         .onSubmit { sendOrStop() }
 
+        ScrollView {
           let spacing: CGFloat = 10
           LazyVGrid(columns: [
-            GridItem(.flexible(), spacing: spacing),
-            GridItem(.flexible(), spacing: spacing),
+            GridItem(.fixed(UIScreen.main.bounds.width / 2 - spacing), spacing: spacing),
+            GridItem(.fixed(UIScreen.main.bounds.width / 2 - spacing), spacing: spacing),
           ], spacing: spacing) {
             ForEach(viewModel.images, id: \.self) { image in
               Image(uiImage: image)
                 .resizable()
-                .aspectRatio(1, contentMode: .fill)
+                .aspectRatio(contentMode: .fill)
+                .frame(width: UIScreen.main.bounds.width / 2 - spacing,
+                       height: UIScreen.main.bounds.width / 2 - spacing)
                 .cornerRadius(12)
                 .clipped()
             }
@@ -105,23 +108,18 @@ struct ImagenScreen: View {
 struct ProgressOverlay: View {
   var body: some View {
     ZStack {
-      Color.black.opacity(0.3)
-        .ignoresSafeArea()
+      RoundedRectangle(cornerRadius: 16)
+        .fill(Material.ultraThinMaterial)
+        .frame(width: 120, height: 100)
+        .shadow(radius: 8)
 
-      ZStack {
-        RoundedRectangle(cornerRadius: 16)
-          .fill(Material.ultraThinMaterial)
-          .frame(width: 120, height: 100)
-          .shadow(radius: 8)
+      VStack(spacing: 12) {
+        ProgressView()
+          .scaleEffect(1.5)
 
-        VStack(spacing: 12) {
-          ProgressView()
-            .scaleEffect(1.5)
-
-          Text("Loading...")
-            .font(.subheadline)
-            .foregroundColor(.secondary)
-        }
+        Text("Loading...")
+          .font(.subheadline)
+          .foregroundColor(.secondary)
       }
     }
   }

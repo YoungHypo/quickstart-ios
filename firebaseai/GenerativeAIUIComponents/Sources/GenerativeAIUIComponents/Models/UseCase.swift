@@ -14,14 +14,13 @@
 
 import Foundation
 
-public enum Category: String, CaseIterable, Identifiable {
+public enum UseCase: String, CaseIterable, Identifiable {
   case text = "Text"
   case image = "Image"
   case video = "Video"
   case audio = "Audio"
   case document = "Document"
   case functionCalling = "Function Calling"
-  case grounding = "Grounding"
 
   public var id: String { rawValue }
 }
