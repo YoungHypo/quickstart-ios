@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7266340A2E37014800554974 /* GenerativeAIUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 726634092E37014800554974 /* GenerativeAIUIComponents */; };
+		72BBDC452E39C9790015B900 /* GenerativeAIUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 72BBDC442E39C9790015B900 /* GenerativeAIUIComponents */; };
 		72DA044F2E385DF3004FED7D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DA044E2E385DF3004FED7D /* ChatMessage.swift */; };
 		869200B32B879C4F00482873 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 869200B22B879C4F00482873 /* GoogleService-Info.plist */; };
 		86C1F4832BC726150026816F /* FunctionCallingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C1F47E2BC726150026816F /* FunctionCallingScreen.swift */; };
@@ -75,7 +75,7 @@
 			files = (
 				DE26D95F2DBB3E9F007E6668 /* FirebaseAI in Frameworks */,
 				886F95D82B17BA420036F07A /* MarkdownUI in Frameworks */,
-				7266340A2E37014800554974 /* GenerativeAIUIComponents in Frameworks */,
+				72BBDC452E39C9790015B900 /* GenerativeAIUIComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,7 +322,7 @@
 			packageProductDependencies = (
 				886F95D72B17BA420036F07A /* MarkdownUI */,
 				DE26D95E2DBB3E9F007E6668 /* FirebaseAI */,
-				726634092E37014800554974 /* GenerativeAIUIComponents */,
+				72BBDC442E39C9790015B900 /* GenerativeAIUIComponents */,
 			);
 			productName = GenerativeAIExample;
 			productReference = 8848C82F2B0D04BC007B434F /* FirebaseAIExample.app */;
@@ -356,7 +356,7 @@
 				88209C212B0FBDF700F64795 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DEA09AC32B1FCE22001962D9 /* XCRemoteSwiftPackageReference "NetworkImage" */,
 				DEFECAAB2D7BB49700EF9621 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				726634082E37014800554974 /* XCLocalSwiftPackageReference "GenerativeAIUIComponents" */,
+				72BBDC432E39C9790015B900 /* XCLocalSwiftPackageReference "GenerativeAIUIComponents" */,
 			);
 			productRefGroup = 8848C8302B0D04BC007B434F /* Products */;
 			projectDirPath = "";
@@ -613,7 +613,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		726634082E37014800554974 /* XCLocalSwiftPackageReference "GenerativeAIUIComponents" */ = {
+		72BBDC432E39C9790015B900 /* XCLocalSwiftPackageReference "GenerativeAIUIComponents" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = GenerativeAIUIComponents;
 		};
@@ -647,7 +647,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		726634092E37014800554974 /* GenerativeAIUIComponents */ = {
+		72BBDC442E39C9790015B900 /* GenerativeAIUIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GenerativeAIUIComponents;
 		};

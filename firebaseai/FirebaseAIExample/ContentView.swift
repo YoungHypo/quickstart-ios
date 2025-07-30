@@ -37,7 +37,7 @@ struct ContentView: View {
   @State private var selectedUseCase: UseCase = .text
 
   var filteredSamples: [Sample] {
-    Sample.samples.filter { $0.useCase == selectedUseCase }
+    Sample.samples.filter { $0.useCases.contains(selectedUseCase) }
   }
 
   let columns = [
@@ -109,7 +109,7 @@ struct ContentView: View {
     case .text:
       ConversationScreen(firebaseService: firebaseService, sampleId: sample.id)
     case .image:
-      ImagenScreen(firebaseService: firebaseService)
+      ImagenScreen(firebaseService: firebaseService, sampleId: sample.id)
     case .video, .audio, .document:
       PhotoReasoningScreen(firebaseService: firebaseService)
     case .functionCalling:

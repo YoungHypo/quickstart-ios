@@ -31,6 +31,7 @@ class ConversationViewModel: ObservableObject {
   }
 
   @Published var initialPrompt: String = ""
+  @Published var title: String = ""
 
   private var model: GenerativeModel
   private var chat: Chat
@@ -59,6 +60,7 @@ class ConversationViewModel: ObservableObject {
     }
 
     initialPrompt = sample?.initialPrompt ?? ""
+    title = sample?.title ?? ""
   }
 
   func sendMessage(_ text: String, streaming: Bool = true) async {

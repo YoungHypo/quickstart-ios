@@ -16,13 +16,14 @@ import FirebaseAI
 import Foundation
 import OSLog
 import SwiftUI
+import GenerativeAIUIComponents
 
 @MainActor
 class ImagenViewModel: ObservableObject {
   private var logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "generative-ai")
 
   @Published
-  var userInput: String = ""
+  var initialPrompt: String = ""
 
   @Published
   var images = [UIImage]()
@@ -37,7 +38,9 @@ class ImagenViewModel: ObservableObject {
 
   private var generateImagesTask: Task<Void, Never>?
 
-  init(firebaseService: FirebaseAI) {
+  private var sample: Sample?
+
+  init(firebaseService: FirebaseAI, sampleId: UUID? = nil) {
     let modelName = "imagen-3.0-generate-002"
     let safetySettings = ImagenSafetySettings(
       safetyFilterLevel: .blockLowAndAbove
@@ -51,6 +54,10 @@ class ImagenViewModel: ObservableObject {
       generationConfig: generationConfig,
       safetySettings: safetySettings
     )
+
+    sample = Sample.find(by: sampleId)
+
+    initialPrompt = sample?.initialPrompt ?? ""
   }
 
   func generateImage(prompt: String) async {

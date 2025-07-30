@@ -83,13 +83,18 @@ struct ConversationScreen: View {
       focusedField = nil
     }
     .toolbar {
+      ToolbarItem(placement: .principal) {
+        Text(viewModel.title)
+          .font(.system(size: 24, weight: .bold))
+          .foregroundColor(.primary)
+          .padding(.top, 10)
+      }
       ToolbarItem(placement: .primaryAction) {
         Button(action: newChat) {
           Image(systemName: "square.and.pencil")
         }
       }
     }
-    .navigationTitle("Chat example")
     .onAppear {
       focusedField = .message
       // Set initial prompt from viewModel if available

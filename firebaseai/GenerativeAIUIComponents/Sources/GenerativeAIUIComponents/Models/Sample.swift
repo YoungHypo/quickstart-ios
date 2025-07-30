@@ -19,23 +19,27 @@ public struct Sample: Identifiable {
   public let id = UUID()
   public let title: String
   public let description: String
-  public let useCase: UseCase
+  public let useCases: [UseCase]
   public let chatHistory: [ModelContent]?
   public let initialPrompt: String?
   public let systemInstruction: ModelContent?
 
   public init(title: String,
               description: String,
-              useCase: UseCase,
+              useCases: [UseCase],
               chatHistory: [ModelContent]? = nil,
               initialPrompt: String? = nil,
               systemInstruction: ModelContent? = nil) {
     self.title = title
     self.description = description
-    self.useCase = useCase
+    self.useCases = useCases
     self.chatHistory = chatHistory
     self.initialPrompt = initialPrompt
     self.systemInstruction = systemInstruction
+  }
+
+  public var useCase: UseCase {
+    return useCases.first ?? .text
   }
 
   public static func find(by id: UUID?) -> Sample? {
@@ -51,7 +55,7 @@ extension Sample {
       title: "Travel tips",
       description: "The user wants the model to help a new traveler" +
         " with travel tips",
-      useCase: .text,
+      useCases: [.text],
       chatHistory: [
         ModelContent(
           role: "user",
@@ -76,7 +80,7 @@ extension Sample {
     Sample(
       title: "Chatbot recommendations for courses",
       description: "A chatbot suggests courses for a performing arts program.",
-      useCase: .text,
+      useCases: [.text],
       initialPrompt: "I am interested in Performing Arts. I have taken Theater 1A.",
       systemInstruction: ModelContent(parts: "You are a chatbot for the county's performing and fine arts" +
         " program. You help students decide what course they will" +
@@ -86,7 +90,7 @@ extension Sample {
     Sample(
       title: "Blog post creator",
       description: "Create a blog post from an image file stored in Cloud Storage.",
-      useCase: .image,
+      useCases: [.image],
       chatHistory: [
         ModelContent(role: "user", parts: "Can you help me create a blog post about this image?"),
         ModelContent(
@@ -99,20 +103,13 @@ extension Sample {
     Sample(
       title: "Imagen 3 - image generation",
       description: "Generate images using Imagen 3",
-      useCase: .image,
-      chatHistory: [
-        ModelContent(role: "user", parts: "Can you generate an image of a sunset over the ocean?"),
-        ModelContent(
-          role: "model",
-          parts: "I can help you generate images using Imagen 3. Please provide a detailed description of what you'd like to see, and I'll create it for you."
-        ),
-      ],
-      initialPrompt: ""
+      useCases: [.image],
+      initialPrompt: "A photo of a modern building with water in the background"
     ),
     Sample(
       title: "Gemini 2.0 Flash - image generation",
       description: "Generate and/or edit images using Gemini 2.0 Flash",
-      useCase: .image,
+      useCases: [.image],
       chatHistory: [
         ModelContent(role: "user", parts: "Can you edit this image to make it brighter?"),
         ModelContent(
@@ -126,7 +123,7 @@ extension Sample {
     Sample(
       title: "Hashtags for a video",
       description: "Generate hashtags for a video ad stored in Cloud Storage.",
-      useCase: .video,
+      useCases: [.video],
       chatHistory: [
         ModelContent(role: "user", parts: "Can you suggest hashtags for my product video?"),
         ModelContent(
@@ -139,7 +136,7 @@ extension Sample {
     Sample(
       title: "Summarize video",
       description: "Summarize a video and extract important dialogue.",
-      useCase: .video,
+      useCases: [.video],
       chatHistory: [
         ModelContent(role: "user", parts: "Can you summarize this video for me?"),
         ModelContent(
@@ -153,7 +150,7 @@ extension Sample {
     Sample(
       title: "Audio Summarization",
       description: "Summarize an audio file",
-      useCase: .audio,
+      useCases: [.audio],
       chatHistory: [
         ModelContent(role: "user", parts: "Can you summarize this audio recording?"),
         ModelContent(
@@ -166,7 +163,7 @@ extension Sample {
     Sample(
       title: "Translation from audio (Vertex AI)",
       description: "Translate an audio file stored in Cloud Storage",
-      useCase: .audio,
+      useCases: [.audio],
       chatHistory: [
         ModelContent(role: "user", parts: "Can you translate this audio from Spanish to English?"),
         ModelContent(
@@ -181,7 +178,7 @@ extension Sample {
       title: "Document comparison",
       description: "Compare the contents of 2 documents." +
         " Only supported by the Vertex AI Gemini API because the documents are stored in Cloud Storage",
-      useCase: .document,
+      useCases: [.document],
       chatHistory: [
         ModelContent(role: "user", parts: "Can you compare these two documents for me?"),
         ModelContent(
@@ -196,7 +193,7 @@ extension Sample {
       title: "Weather Chat",
       description: "Use function calling to get the weather conditions" +
         " for a specific US city on a specific date.",
-      useCase: .functionCalling,
+      useCases: [.functionCalling, .text],
       chatHistory: [
         ModelContent(role: "user", parts: "What's the weather like in New York today?"),
         ModelContent(
