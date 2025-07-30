@@ -34,10 +34,10 @@ enum BackendOption: String, CaseIterable, Identifiable {
 struct ContentView: View {
   @State private var selectedBackend: BackendOption = .googleAI
   @State private var firebaseService: FirebaseAI = FirebaseAI.firebaseAI(backend: .googleAI())
-  @State private var selectedUseCase: UseCase = .text
+  @State private var selectedCategory: Category = .text
 
   var filteredSamples: [Sample] {
-    Sample.samples.filter { $0.useCases.contains(selectedUseCase) }
+    Sample.samples.filter { $0.categories.contains(selectedCategory) }
   }
 
   let columns = [
@@ -67,16 +67,15 @@ struct ContentView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
               HStack(spacing: 10) {
-                ForEach(UseCase.allCases) { useCase in
-                  FilterChipView(useCase: useCase, isSelected: selectedUseCase == useCase) {
-                    selectedUseCase = useCase
+                ForEach(Category.allCases) { category in
+                  FilterChipView(category: category, isSelected: selectedCategory == category) {
+                    selectedCategory = category
                   }
                 }
               }
               .padding(.horizontal)
             }
           }
-
           // Samples
           VStack(alignment: .leading) {
             Text("Samples")
@@ -105,8 +104,8 @@ struct ContentView: View {
 
   @ViewBuilder
   private func destinationView(for sample: Sample) -> some View {
-    switch sample.useCase {
-    case .text:
+    switch sample.category {
+    case .text, .grounding:
       ConversationScreen(firebaseService: firebaseService, sampleId: sample.id)
     case .image:
       ImagenScreen(firebaseService: firebaseService, sampleId: sample.id)
