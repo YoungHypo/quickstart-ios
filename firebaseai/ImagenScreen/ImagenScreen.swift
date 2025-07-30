@@ -80,7 +80,7 @@ struct ImagenScreen: View {
         Text("Imagen example")
           .font(.system(size: 24, weight: .bold))
           .foregroundColor(.primary)
-           .padding(.top, 10)
+          .padding(.top, 10)
       }
     }
     .onAppear {
@@ -90,7 +90,7 @@ struct ImagenScreen: View {
       }
     }
   }
-  
+
   private func sendMessage() {
     Task {
       await viewModel.generateImage(prompt: userPrompt)
@@ -110,18 +110,23 @@ struct ImagenScreen: View {
 struct ProgressOverlay: View {
   var body: some View {
     ZStack {
-      RoundedRectangle(cornerRadius: 16)
-        .fill(Material.ultraThinMaterial)
-        .frame(width: 120, height: 100)
-        .shadow(radius: 8)
+      Color.black.opacity(0.3)
+        .ignoresSafeArea()
 
-      VStack(spacing: 12) {
-        ProgressView()
-          .scaleEffect(1.5)
+      ZStack {
+        RoundedRectangle(cornerRadius: 16)
+          .fill(Material.ultraThinMaterial)
+          .frame(width: 120, height: 100)
+          .shadow(radius: 8)
 
-        Text("Loading...")
-          .font(.subheadline)
-          .foregroundColor(.secondary)
+        VStack(spacing: 12) {
+          ProgressView()
+            .scaleEffect(1.5)
+
+          Text("Loading...")
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+        }
       }
     }
   }
