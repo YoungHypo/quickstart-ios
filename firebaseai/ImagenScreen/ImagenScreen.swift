@@ -41,7 +41,7 @@ struct ImagenScreen: View {
     ZStack {
       ScrollView {
         VStack {
-          InputField("Enter a prompt to generate an image", text: $viewModel.userInput) {
+          InputField("Enter a prompt to generate an image", text: $userPrompt) {
             Image(
               systemName: viewModel.inProgress ? "stop.circle.fill" : "paperplane.circle.fill"
             )

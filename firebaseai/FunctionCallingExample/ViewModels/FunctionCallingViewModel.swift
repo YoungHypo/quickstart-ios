@@ -15,7 +15,6 @@
 import FirebaseAI
 import Foundation
 import UIKit
-import GenerativeAIUIComponents
 
 @MainActor
 class FunctionCallingViewModel: ObservableObject {
