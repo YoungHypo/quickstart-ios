@@ -42,7 +42,7 @@ class ImagenViewModel: ObservableObject {
 
   init(firebaseService: FirebaseAI, sampleId: UUID? = nil) {
     sample = Sample.find(by: sampleId)
-    
+
     let modelName = "imagen-3.0-generate-002"
     let safetySettings = ImagenSafetySettings(
       safetyFilterLevel: .blockLowAndAbove
