@@ -13,100 +13,42 @@
 // limitations under the License.
 
 import FirebaseAI
+
 import SwiftUI
 
 struct FunctionCallingScreen: View {
   let firebaseService: FirebaseAI
   @StateObject var viewModel: FunctionCallingViewModel
 
-  @State
-  private var userPrompt = "What is 100 Euros in U.S. Dollars?"
-
-  init(firebaseService: FirebaseAI) {
+  init(firebaseService: FirebaseAI, sample: Sample? = nil) {
     self.firebaseService = firebaseService
     _viewModel =
-      StateObject(wrappedValue: FunctionCallingViewModel(firebaseService: firebaseService))
+      StateObject(wrappedValue: FunctionCallingViewModel(firebaseService: firebaseService,
+                                              sample: sample))
   }
-
-  enum FocusedField: Hashable {
-    case message
-  }
-
-  @FocusState
-  var focusedField: FocusedField?
 
   var body: some View {
-    VStack {
-      ScrollViewReader { scrollViewProxy in
-        List {
-          Text("Interact with a currency conversion API using function calling in Gemini.")
-          ForEach(viewModel.messages) { message in
-            MessageView(message: message)
-          }
-          if let error = viewModel.error {
-            ErrorView(error: error)
-              .tag("errorView")
-          }
-        }
-        .listStyle(.plain)
-        .onChange(of: viewModel.messages, perform: { newValue in
-          if viewModel.hasError {
-            // Wait for a short moment to make sure we can actually scroll to the bottom.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-              withAnimation {
-                scrollViewProxy.scrollTo("errorView", anchor: .bottom)
-              }
-              focusedField = .message
-            }
-          } else {
-            guard let lastMessage = viewModel.messages.last else { return }
-
-            // Wait for a short moment to make sure we can actually scroll to the bottom.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-              withAnimation {
-                scrollViewProxy.scrollTo(lastMessage.id, anchor: .bottom)
-              }
-              focusedField = .message
-            }
-          }
-        })
-        .onTapGesture {
-          focusedField = nil
+    NavigationStack {
+      ConversationView(messages: $viewModel.messages,
+                       userPrompt: viewModel.initialPrompt) { message in
+        MessageView(message: message)
+      }
+      .disableAttachments()
+      .errorState(viewModel.error)
+      .onSendMessage { prompt in
+        Task {
+          await viewModel.sendMessage(prompt, streaming: true)
         }
       }
-      InputField("Message...", text: $userPrompt) {
-        Image(systemName: viewModel.busy ? "stop.circle.fill" : "arrow.up.circle.fill")
-          .font(.title)
-      }
-      .focused($focusedField, equals: .message)
-      .onSubmit { sendOrStop() }
-    }
-    .toolbar {
-      ToolbarItem(placement: .primaryAction) {
-        Button(action: newChat) {
-          Image(systemName: "square.and.pencil")
+      .toolbar {
+        ToolbarItem(placement: .primaryAction) {
+          Button(action: newChat) {
+            Image(systemName: "square.and.pencil")
+          }
         }
       }
-    }
-    .navigationTitle("Function Calling")
-    .onAppear {
-      focusedField = .message
-    }
-  }
-
-  private func sendMessage() {
-    Task {
-      let prompt = userPrompt
-      userPrompt = ""
-      await viewModel.sendMessage(prompt, streaming: true)
-    }
-  }
-
-  private func sendOrStop() {
-    if viewModel.busy {
-      viewModel.stop()
-    } else {
-      sendMessage()
+      .navigationTitle(viewModel.title)
+      .navigationBarTitleDisplayMode(.inline)
     }
   }
 
@@ -117,7 +59,8 @@ struct FunctionCallingScreen: View {
 
 struct FunctionCallingScreen_Previews: PreviewProvider {
   struct ContainerView: View {
-    @StateObject var viewModel = FunctionCallingViewModel(firebaseService: FirebaseAI.firebaseAI())
+    @StateObject var viewModel = FunctionCallingViewModel(firebaseService: FirebaseAI
+      .firebaseAI(), sample: nil) // Example service init
 
     var body: some View {
       FunctionCallingScreen(firebaseService: FirebaseAI.firebaseAI())

@@ -14,6 +14,7 @@
 		726490DC2E3F39E000A92703 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726490D72E3F39D900A92700 /* InputField.swift */; };
 		726490DD2E3F39E000A92704 /* MultimodalInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726490D82E3F39DC00A92700 /* MultimodalInputField.swift */; };
 		72DA044F2E385DF3004FED7D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DA044E2E385DF3004FED7D /* ChatMessage.swift */; };
+		72E040752E448731003D4135 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E040742E44872C003D4135 /* WeatherService.swift */; };
 		869200B32B879C4F00482873 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 869200B22B879C4F00482873 /* GoogleService-Info.plist */; };
 		86C1F4832BC726150026816F /* FunctionCallingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C1F47E2BC726150026816F /* FunctionCallingScreen.swift */; };
 		86C1F4842BC726150026816F /* FunctionCallingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C1F4802BC726150026816F /* FunctionCallingViewModel.swift */; };
@@ -47,6 +48,7 @@
 		726490D72E3F39D900A92700 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		726490D82E3F39DC00A92700 /* MultimodalInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultimodalInputField.swift; sourceTree = "<group>"; };
 		72DA044E2E385DF3004FED7D /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		72E040742E44872C003D4135 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		869200B22B879C4F00482873 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86C1F47E2BC726150026816F /* FunctionCallingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionCallingScreen.swift; sourceTree = "<group>"; };
 		86C1F4802BC726150026816F /* FunctionCallingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionCallingViewModel.swift; sourceTree = "<group>"; };
@@ -125,6 +127,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		72E040732E448720003D4135 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				72E040742E44872C003D4135 /* WeatherService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		86C1F47F2BC726150026816F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +154,7 @@
 		86C1F4822BC726150026816F /* FunctionCallingExample */ = {
 			isa = PBXGroup;
 			children = (
+				72E040732E448720003D4135 /* Services */,
 				86C1F4812BC726150026816F /* ViewModels */,
 				86C1F47F2BC726150026816F /* Screens */,
 			);
@@ -403,6 +414,7 @@
 				DEFECAA92D7B4CCD00EF9621 /* ImagenViewModel.swift in Sources */,
 				DEFECAAA2D7B4CCD00EF9621 /* ImagenScreen.swift in Sources */,
 				886F95DB2B17BAEF0036F07A /* PhotoReasoningViewModel.swift in Sources */,
+				72E040752E448731003D4135 /* WeatherService.swift in Sources */,
 				886F95E12B17D5010036F07A /* ChatScreen.swift in Sources */,
 				88263BF02B239C09008AB09B /* ErrorView.swift in Sources */,
 				72DA044F2E385DF3004FED7D /* ChatMessage.swift in Sources */,

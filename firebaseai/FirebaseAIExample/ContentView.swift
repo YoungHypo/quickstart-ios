@@ -118,7 +118,7 @@ struct ContentView: View {
     case "PhotoReasoningScreen":
       PhotoReasoningScreen(firebaseService: firebaseService)
     case "FunctionCallingScreen":
-      FunctionCallingScreen(firebaseService: firebaseService)
+      FunctionCallingScreen(firebaseService: firebaseService, sample: sample)
     default:
       EmptyView()
     }
