@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import FirebaseAI
-import GenerativeAIUIComponents
 import SwiftUI
 
 struct FunctionCallingScreen: View {
