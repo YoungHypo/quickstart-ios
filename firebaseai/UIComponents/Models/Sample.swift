@@ -30,29 +30,35 @@ public struct Sample: Identifiable {
   public let description: String
   public let useCases: [UseCase]
   public let navRoute: String
+  public let modelName: String
   public let chatHistory: [ModelContent]?
   public let initialPrompt: String?
   public let systemInstruction: ModelContent?
   public let tools: [Tool]?
+  public let generationConfig: GenerationConfig?
   public let attachedURLs: [URLMetadata]?
 
   public init(title: String,
               description: String,
               useCases: [UseCase],
               navRoute: String,
+              modelName: String = "gemini-2.5-flash",
               chatHistory: [ModelContent]? = nil,
               initialPrompt: String? = nil,
               systemInstruction: ModelContent? = nil,
               tools: [Tool]? = nil,
+              generationConfig: GenerationConfig? = nil,
               attachedURLs: [URLMetadata]? = nil) {
     self.title = title
     self.description = description
     self.useCases = useCases
     self.navRoute = navRoute
+    self.modelName = modelName
     self.chatHistory = chatHistory
     self.initialPrompt = initialPrompt
     self.systemInstruction = systemInstruction
     self.tools = tools
+    self.generationConfig = generationConfig
     self.attachedURLs = attachedURLs
   }
 }
@@ -127,9 +133,11 @@ extension Sample {
       description: "Generate and/or edit images using Gemini 2.0 Flash",
       useCases: [.image],
       navRoute: "ChatScreen",
+      modelName: "gemini-2.0-flash-preview-image-generation",
       initialPrompt: "Hi, can you create a 3d rendered image of a pig " +
         "with wings and a top hat flying over a happy " +
-        "futuristic scifi city with lots of greenery?"
+        "futuristic scifi city with lots of greenery?",
+      generationConfig: GenerationConfig(responseModalities: [.text, .image]),
     ),
     // Video
     Sample(

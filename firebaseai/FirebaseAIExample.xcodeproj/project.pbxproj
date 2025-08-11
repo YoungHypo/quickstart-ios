@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2EDE5CFC2E3F41050035FAF6 /* AttachmentPreviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650243CA2C8E4358A8121979 /* AttachmentPreviewCard.swift */; };
 		3210FD652E3F41050035FAF6 /* MultimodalAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF3F92CA3BE4F8D8D61E3BD /* MultimodalAttachment.swift */; };
-
 		725258D42E3F41050035FAF6 /* MessageComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725258D32E3F40FE0035FAF6 /* MessageComposerView.swift */; };
 		726490D92E3F39E000A92700 /* Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726490D22E3F39D200A92700 /* Sample.swift */; };
 		726490DA2E3F39E000A92701 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726490D32E3F39D200A92700 /* UseCase.swift */; };
@@ -44,7 +43,6 @@
 /* Begin PBXFileReference section */
 		5EF3F92CA3BE4F8D8D61E3BD /* MultimodalAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultimodalAttachment.swift; sourceTree = "<group>"; };
 		650243CA2C8E4358A8121979 /* AttachmentPreviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentPreviewCard.swift; sourceTree = "<group>"; };
-
 		725258D32E3F40FE0035FAF6 /* MessageComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerView.swift; sourceTree = "<group>"; };
 		726490D22E3F39D200A92700 /* Sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample.swift; sourceTree = "<group>"; };
 		726490D32E3F39D200A92700 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
@@ -204,7 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				726490D12E3F39C900A92700 /* UIComponents */,
-				DEFECAA82D7B4CCD00EF9621 /* ImagenScreen */,
+				DEFECAA82D7B4CCD00EF9621 /* ImagenExample */,
 				869200B22B879C4F00482873 /* GoogleService-Info.plist */,
 				8848C8312B0D04BC007B434F /* FirebaseAIExample */,
 				8848C8572B0D056C007B434F /* MultimodalExample */,
@@ -331,13 +329,13 @@
 			path = Grounding;
 			sourceTree = "<group>";
 		};
-		DEFECAA82D7B4CCD00EF9621 /* ImagenScreen */ = {
+		DEFECAA82D7B4CCD00EF9621 /* ImagenExample */ = {
 			isa = PBXGroup;
 			children = (
 				DEFECAA62D7B4CCD00EF9621 /* ImagenScreen.swift */,
 				DEFECAA72D7B4CCD00EF9621 /* ImagenViewModel.swift */,
 			);
-			path = ImagenScreen;
+			path = ImagenExample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,7 +420,6 @@
 			files = (
 				2EDE5CFC2E3F41050035FAF6 /* AttachmentPreviewCard.swift in Sources */,
 				3210FD652E3F41050035FAF6 /* MultimodalAttachment.swift in Sources */,
-
 				86C1F4832BC726150026816F /* FunctionCallingScreen.swift in Sources */,
 				886F95DF2B17D5010036F07A /* BouncingDots.swift in Sources */,
 				86C1F4842BC726150026816F /* FunctionCallingViewModel.swift in Sources */,

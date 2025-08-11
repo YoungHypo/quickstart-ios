@@ -43,15 +43,14 @@ class ChatViewModel: ObservableObject {
   init(firebaseService: FirebaseAI, sample: Sample? = nil) {
     self.sample = sample
 
-    // create a generative model with sample data
     model = firebaseService.generativeModel(
-      modelName: "gemini-2.0-flash-001",
+      modelName: sample?.modelName ?? "gemini-2.5-flash",
+      generationConfig: sample?.generationConfig,
       tools: sample?.tools,
       systemInstruction: sample?.systemInstruction
     )
 
     if let chatHistory = sample?.chatHistory, !chatHistory.isEmpty {
-      // Initialize with sample chat history if it's available
       messages = ChatMessage.from(chatHistory)
       chat = model.startChat(history: chatHistory)
     } else {
@@ -109,6 +108,14 @@ class ChatViewModel: ObservableObject {
             messages[messages.count - 1].message += text
           }
 
+          if let inlineDataPart = chunk.inlineDataParts.first {
+            if let uiImage = UIImage(data: inlineDataPart.data) {
+              messages[messages.count - 1].image = uiImage
+            } else {
+              print("Failed to convert inline data to UIImage")
+            }
+          }
+
           if let candidate = chunk.candidates.first {
             if let groundingMetadata = candidate.groundingMetadata {
               self.messages[self.messages.count - 1].groundingMetadata = groundingMetadata
@@ -154,6 +161,14 @@ class ChatViewModel: ObservableObject {
             if let groundingMetadata = candidate.groundingMetadata {
               self.messages[self.messages.count - 1].groundingMetadata = groundingMetadata
             }
+          }
+        }
+
+        if let inlineDataPart = response?.inlineDataParts.first {
+          if let uiImage = UIImage(data: inlineDataPart.data) {
+            messages[messages.count - 1].image = uiImage
+          } else {
+            print("Failed to convert inline data to UIImage")
           }
         }
       } catch {

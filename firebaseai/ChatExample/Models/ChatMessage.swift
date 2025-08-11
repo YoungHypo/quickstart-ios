@@ -14,6 +14,7 @@
 
 import FirebaseAI
 import Foundation
+import UIKit
 
 public enum Participant {
   case system
@@ -27,6 +28,7 @@ public struct ChatMessage: Identifiable, Equatable {
   public var groundingMetadata: GroundingMetadata?
   public var pending = false
   public var attachments: [MultimodalAttachment] = []
+  public var image: UIImage?
 
   public static func pending(participant: Participant) -> ChatMessage {
     Self(message: "", participant: participant, pending: true)
@@ -35,7 +37,7 @@ public struct ChatMessage: Identifiable, Equatable {
   // TODO(andrewheard): Add Equatable conformance to GroundingMetadata and remove this
   public static func == (lhs: ChatMessage, rhs: ChatMessage) -> Bool {
     lhs.id == rhs.id && lhs.message == rhs.message && lhs.participant == rhs.participant && lhs
-      .pending == rhs.pending && lhs.attachments == rhs.attachments
+      .pending == rhs.pending && lhs.attachments == rhs.attachments && lhs.image == rhs.image
   }
 }
 
@@ -74,7 +76,6 @@ public extension ChatMessage {
 
 public extension ChatMessage {
   static func from(_ modelContent: ModelContent) -> ChatMessage? {
-    // TODO: add non-text parts to message when multi-model support is added
     let text = modelContent.parts.compactMap { ($0 as? TextPart)?.text }.joined()
     guard !text.isEmpty else {
       return nil

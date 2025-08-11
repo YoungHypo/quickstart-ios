@@ -43,12 +43,24 @@ struct MessageContentView: View {
     if message.pending {
       BouncingDots()
     } else {
-      // Grounded Response
-      if let groundingMetadata = message.groundingMetadata {
-        GroundedResponseView(message: message, groundingMetadata: groundingMetadata)
-      } else {
-        // Non-grounded response
-        ResponseTextView(message: message)
+      VStack(alignment: .leading, spacing: 8) {
+        if let image = message.image {
+          Image(uiImage: image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(maxWidth: 300, maxHeight: 300)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
+
+        if !message.message.isEmpty {
+          // Grounded Response
+          if let groundingMetadata = message.groundingMetadata {
+            GroundedResponseView(message: message, groundingMetadata: groundingMetadata)
+          } else {
+            // Non-grounded response
+            ResponseTextView(message: message)
+          }
+        }
       }
     }
   }
