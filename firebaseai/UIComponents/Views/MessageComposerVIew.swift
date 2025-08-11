@@ -16,11 +16,14 @@
 // Copyright belongs to the original author. Used under the terms of the repository's license.
 
 import SwiftUI
+import Foundation
 
 extension EnvironmentValues {
   @Entry var onSubmitAction: () -> Void = {}
   @Entry var disableAttachments: Bool = false
   @Entry var attachmentActions: AnyView = AnyView(EmptyView())
+  @Entry var pendingAttachments: [MultimodalAttachment] = []
+  @Entry var onAttachmentRemove: (MultimodalAttachment) -> Void = { _ in }
 }
 
 extension View {
@@ -35,12 +38,22 @@ extension View {
   public func attachmentActions<Content: View>(@ViewBuilder content: () -> Content) -> some View {
     environment(\.attachmentActions, AnyView(content()))
   }
+
+  public func pendingAttachments(_ attachments: [MultimodalAttachment]) -> some View {
+    environment(\.pendingAttachments, attachments)
+  }
+
+  public func onAttachmentRemove(_ action: @escaping (MultimodalAttachment) -> Void) -> some View {
+    environment(\.onAttachmentRemove, action)
+  }
 }
 
 struct MessageComposerView: View {
   @Environment(\.onSubmitAction) private var onSubmitAction
   @Environment(\.disableAttachments) private var disableAttachments
   @Environment(\.attachmentActions) private var attachmentActions
+  @Environment(\.pendingAttachments) private var pendingAttachments
+  @Environment(\.onAttachmentRemove) private var onAttachmentRemove
 
   @Binding var userPrompt: String
 
@@ -59,17 +72,24 @@ struct MessageComposerView: View {
             .glassEffect(.regular.interactive(), in: .circle)
           }
 
-          HStack(alignment: .bottom) {
-            TextField("Enter a message", text: $userPrompt, axis: .vertical)
-              .frame(minHeight: 32)
-              .padding(EdgeInsets(top: 7, leading: 16, bottom: 7, trailing: 0))
-              .onSubmit(of: .text) { onSubmitAction() }
+          VStack(spacing: 0) {
+            AttachmentPreviewScrollView(
+              attachments: pendingAttachments,
+              onAttachmentRemove: onAttachmentRemove
+            )
 
-            Button(action: { onSubmitAction() }) {
-              Image(systemName: "arrow.up")
+            HStack(alignment: .bottom) {
+              TextField("Enter a message", text: $userPrompt, axis: .vertical)
+                .frame(minHeight: 32)
+                .padding(EdgeInsets(top: 7, leading: 16, bottom: 7, trailing: 0))
+                .onSubmit(of: .text) { onSubmitAction() }
+
+              Button(action: { onSubmitAction() }) {
+                Image(systemName: "arrow.up")
+              }
+              .buttonStyle(.borderedProminent)
+              .padding(EdgeInsets(top: 7, leading: 0, bottom: 7, trailing: 7))
             }
-            .buttonStyle(.borderedProminent)
-            .padding(EdgeInsets(top: 7, leading: 0, bottom: 7, trailing: 7))
           }
           .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 20.0))
           .offset(x: -5.0, y: 0.0)
@@ -97,19 +117,26 @@ struct MessageComposerView: View {
           .padding(.trailing, 8)
         }
 
-        HStack(alignment: .bottom) {
-          TextField("Enter a message", text: $userPrompt, axis: .vertical)
-            .frame(minHeight: 32)
-            .padding(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 0))
-            .onSubmit(of: .text) { onSubmitAction() }
+        VStack(spacing: 0) {
+          AttachmentPreviewScrollView(
+            attachments: pendingAttachments,
+            onAttachmentRemove: onAttachmentRemove
+          )
 
-          Button(action: { onSubmitAction() }) {
-            Image(systemName: "arrow.up")
+          HStack(alignment: .bottom) {
+            TextField("Enter a message", text: $userPrompt, axis: .vertical)
+              .frame(minHeight: 32)
+              .padding(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 0))
+              .onSubmit(of: .text) { onSubmitAction() }
+
+            Button(action: { onSubmitAction() }) {
+              Image(systemName: "arrow.up")
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.circle)
+            .controlSize(.regular)
+            .padding(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 7))
           }
-          .buttonStyle(.borderedProminent)
-          .buttonBorderShape(.circle)
-          .controlSize(.regular)
-          .padding(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 7))
         }
         .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 22))

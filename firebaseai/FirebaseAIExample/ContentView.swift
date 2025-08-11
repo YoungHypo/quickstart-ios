@@ -33,10 +33,14 @@ enum BackendOption: String, CaseIterable, Identifiable {
 struct ContentView: View {
   @State private var selectedBackend: BackendOption = .googleAI
   @State private var firebaseService: FirebaseAI = FirebaseAI.firebaseAI(backend: .googleAI())
-  @State private var selectedUseCase: UseCase = .text
+  @State private var selectedUseCase: UseCase = .all
 
   var filteredSamples: [Sample] {
-    Sample.samples.filter { $0.useCases.contains(selectedUseCase) }
+    if selectedUseCase == .all {
+      return Sample.samples
+    } else {
+      return Sample.samples.filter { $0.useCases.contains(selectedUseCase) }
+    }
   }
 
   let columns = [
@@ -115,8 +119,8 @@ struct ContentView: View {
       ChatScreen(firebaseService: firebaseService, sample: sample)
     case "ImagenScreen":
       ImagenScreen(firebaseService: firebaseService, sample: sample)
-    case "PhotoReasoningScreen":
-      PhotoReasoningScreen(firebaseService: firebaseService)
+    case "MultimodalScreen":
+      MultimodalScreen(firebaseService: firebaseService, sample: sample)
     case "FunctionCallingScreen":
       FunctionCallingScreen(firebaseService: firebaseService, sample: sample)
     default:

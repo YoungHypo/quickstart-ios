@@ -69,8 +69,26 @@ public struct ConversationView<Content>: View where Content: View {
       ScrollView {
         LazyVStack(spacing: 20) {
           ForEach(messages) { message in
-            content(message)
-              .padding(.horizontal)
+            VStack(spacing: 8) {
+              if message.participant == .user && !message.attachments.isEmpty {
+                HStack {
+                  Spacer()
+                  HStack(spacing: 8) {
+                    ForEach(message.attachments) { attachment in
+                      AttachmentPreviewCard(
+                        attachment: attachment,
+                        onRemove: nil
+                      )
+                      .frame(width: 200)
+                    }
+                  }
+                }
+                .padding(.horizontal)
+              }
+
+              content(message)
+                .padding(.horizontal)
+            }
           }
           if let error = modelError {
             ErrorView(error: error)

@@ -170,7 +170,8 @@ class FunctionCallingViewModel: ObservableObject {
           )
         )
 
-        let finalResponse = try await chat.sendMessageStream([ModelContent(role: "function", parts: functionResponses)])
+        let finalResponse = try await chat
+          .sendMessageStream([ModelContent(role: "function", parts: functionResponses)])
 
         for try await chunk in finalResponse {
           guard let candidate = chunk.candidates.first else {
@@ -207,7 +208,8 @@ class FunctionCallingViewModel: ObservableObject {
           )
         )
 
-        let finalResponse = try await chat.sendMessage([ModelContent(role: "function", parts: functionResponses)])
+        let finalResponse = try await chat
+          .sendMessage([ModelContent(role: "function", parts: functionResponses)])
 
         guard let candidate = finalResponse.candidates.first else {
           fatalError("No candidate.")

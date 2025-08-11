@@ -26,6 +26,7 @@ public struct ChatMessage: Identifiable, Equatable {
   public let participant: Participant
   public var groundingMetadata: GroundingMetadata?
   public var pending = false
+  public var attachments: [MultimodalAttachment] = []
 
   public static func pending(participant: Participant) -> ChatMessage {
     Self(message: "", participant: participant, pending: true)
@@ -34,7 +35,7 @@ public struct ChatMessage: Identifiable, Equatable {
   // TODO(andrewheard): Add Equatable conformance to GroundingMetadata and remove this
   public static func == (lhs: ChatMessage, rhs: ChatMessage) -> Bool {
     lhs.id == rhs.id && lhs.message == rhs.message && lhs.participant == rhs.participant && lhs
-      .pending == rhs.pending
+      .pending == rhs.pending && lhs.attachments == rhs.attachments
   }
 }
 
