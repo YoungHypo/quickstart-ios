@@ -122,14 +122,14 @@ extension Sample {
       ]
     ),
     Sample(
-      title: "Imagen 3 - image generation",
+      title: "Imagen - image generation",
       description: "Generate images using Imagen 3",
       useCases: [.image],
       navRoute: "ImagenScreen",
       initialPrompt: "A photo of a modern building with water in the background"
     ),
     Sample(
-      title: "Gemini 2.0 Flash - image generation",
+      title: "Gemini Flash - image generation",
       description: "Generate and/or edit images using Gemini 2.0 Flash",
       useCases: [.image],
       navRoute: "ChatScreen",
