@@ -23,7 +23,7 @@ jobs:
     runs-on: macOS-15
     strategy:
       matrix:
-        xcode: ["26_beta_5"]
+        xcode: ["26_beta_6"]
         os: [iOS]
         include:
           - os: iOS
