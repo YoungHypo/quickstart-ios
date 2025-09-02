@@ -45,5 +45,10 @@ jobs:
           gem install xcpretty
       - name: Placeholder GoogleService-Info.plist good enough for build only testing.
         run: cp ./mock-GoogleService-Info.plist ./firebaseai/GoogleService-Info.plist
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '26.0-beta'
+      - name: Install iOS
+        run: xcodebuild -downloadPlatform iOS
       - name: Build and Test SwiftUI (${{ matrix.os }})
         run: ./scripts/test.sh
